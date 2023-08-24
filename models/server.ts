@@ -1,5 +1,6 @@
 import express, { Express } from 'express'
 import { connectDB } from '../dataBase/config'
+import userRoutes from '../routes/user'
 
 const PORT = process.env.PORT ?? 9001
 
@@ -10,7 +11,15 @@ export class Server {
     this.app = express()
     this.connectToDB()
     this.middlewares()
+    this.routes()
   }
+
+  listen(): void {
+    this.app.listen(PORT, () => {
+      console.log(`Server started on port: ${PORT}`)
+    })
+  }
+
 
   async connectToDB(): Promise<void> {
     await connectDB()
@@ -20,9 +29,10 @@ export class Server {
     this.app.use(express.json())
   }
 
-  listen(): void {
-    this.app.listen(PORT, () => {
-      console.log(`Server started on port: ${PORT}`)
-    })
+  routes(): void {
+    this.app.use('/user', userRoutes )
   }
+
+
+
 }
