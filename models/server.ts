@@ -5,7 +5,7 @@ import userRoutes from '../routes/user'
 const PORT = process.env.PORT ?? 9001
 
 export class Server {
-  app: Express
+  app: Express 
 
   constructor() {
     this.app = express()
@@ -20,7 +20,6 @@ export class Server {
     })
   }
 
-
   async connectToDB(): Promise<void> {
     await connectDB()
   }
@@ -32,7 +31,4 @@ export class Server {
   routes(): void {
     this.app.use('/user', userRoutes )
   }
-
-
-
 }
