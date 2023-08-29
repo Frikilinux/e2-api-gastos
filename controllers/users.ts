@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { IUser, User } from '../models/user'
+import validateUser from '../schemas/user'
 
 const getUsers = async (req: Request, res: Response) => {
   const state = { state: true }
@@ -13,34 +14,25 @@ const getUserByUserName = async (req: Request, res: Response) => {
 
   const user = await User.findOne({ userName: username })
 
-  user ? res.json(user) : res.status(404).json({ msg: 'User not found' })
+  user
+    ? res.status(200).json(user)
+    : res.status(404).json({ msg: 'User not found' })
 }
 
-// const getUserByDni = async (req: Request, res: Response) => {
-//   const { dni } = req.params
-
-//   const user = await User.findOne({dni})
-
-//   user ? res.json(user) : res.status(404).json({ msg: 'User not found' })
-// }
-
 const createUser = async (req: Request, res: Response) => {
-  const userData: IUser = req.body
+  const result = validateUser(req.body)
 
-  const { dni, name, userName, mail } = userData
-
-  if (!dni || !name || !mail || !userName) {
-    res.json({
-      msg: 'Error in the request!! :(',
-    })
-    return
+  if (!result.success) {
+    return res
+      .status(400)
+      .json({ error: { ...result.error, name: 'ZOTTA Error' } })
   }
 
-  const user = new User({ ...userData, state: true })
+  const user = new User<IUser>({ ...result.data, state: true })
 
   await user.save()
 
-  res.json({
+  res.status(201).json({
     msg: 'User created succesfully',
     user,
   })
