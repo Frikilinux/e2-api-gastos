@@ -1,6 +1,7 @@
 import express, { Express } from 'express'
 import { connectDB } from '../dataBase/config'
 import userRoutes from '../routes/user'
+import spentRoutes from '../routes/spent'
 
 const PORT = process.env.PORT ?? 9001
 
@@ -30,5 +31,6 @@ export class Server {
 
   routes(): void {
     this.app.use('/user', userRoutes )
+    this.app.use('/spent', spentRoutes )
   }
 }

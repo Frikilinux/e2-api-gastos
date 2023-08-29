@@ -5,6 +5,7 @@ interface IUser {
   dni: number
   name: string
   mail: string
+  state: boolean
 }
 
 const UserSchema = new Schema<IUser>({
@@ -22,6 +23,9 @@ const UserSchema = new Schema<IUser>({
   mail: {
     type: String,
   },
+  state:{
+    type: Boolean
+  }
 })
 
 const User = model<IUser>('User', UserSchema)
