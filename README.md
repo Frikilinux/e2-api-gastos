@@ -62,7 +62,30 @@ Body:
 
 ## Get spent by user
 
-### GET /spent/:user
+### GET /spent/:user 
+
+Response: (Object array)
+
+```json
+// /user/obdulio78
+
+[
+  {
+    "_id": "64ed29fc252d520232056780",
+    "user": "64e803b67d29e33539859d08",
+    "category": "Bici",
+    "price": 20500,
+    "product": "Cadena",
+    "description": "Cadena nueva",
+    "state": true,
+    "__v": 0
+  },
+  {
+    ...
+  }
+]
+
+```
 
 ## Get all spent
 
