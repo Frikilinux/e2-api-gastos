@@ -11,16 +11,38 @@ Body:
 
 ```json
 {
-  "userName": string ,
-  "dni": number,
-  "name": string,
-  "mail": string
+  "userName": string (reuired, unique)
+  "dni": number
+  "name": string
+  "mail": string (a valid email address)
+}
+```
+
+## Get user by user name
+
+### GET /user/:username
+
+Response:
+
+```json
+// /user/obdulio78
+
+{
+  "_id": "64e803b67d29e33539859d08",
+  "userName": "obdulio78",
+  "dni": 25645855,
+  "name": "Obdulio",
+  "mail": "obdulio@gmail.com",
+  "__v": 0,
+  "state": true
 }
 ```
 
 ## Get all users
 
 ### GET /user
+
+---
 
 ## Create new spent
 
@@ -35,13 +57,12 @@ Body:
   "price": number
   "product": string
   "description": string
-  "state": boolean
 }
 ```
 
 ## Get spent by user
 
-### GET /spent/{username}
+### GET /spent/:user
 
 ## Get all spent
 
