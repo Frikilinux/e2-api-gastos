@@ -1,13 +1,8 @@
-// import express from 'express'
+import dotenv from 'dotenv'
+import { Server } from './models/server'
 
-// const app = express()
+dotenv.config()
 
-// const PORT = process.env.PORT ?? 9001
-
-
-
-import { Server } from "./models/server";
-
-const server = new Server();
+const server = new Server()
 
 server.listen()

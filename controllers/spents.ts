@@ -23,27 +23,21 @@ const getSpentsByUser = async (req: Request, res: Response) => {
 
   spents.length
     ? res.status(200).json(spents)
-    : res.status(200).json({ msg: `Not spents registered for user ${userData?._id}` })
+    : res
+        .status(200)
+        .json({ msg: `Not spents registered for user ${userData?._id}` })
 }
 
 const createSpent = async (req: Request, res: Response) => {
-  const result = validateSpent(req.body)
-
-  if (!result.success) {
-    return res
-      .status(400)
-      .json({ error: { ...result.error, name: 'ZOTTA Error' } })
-  }
-
   const spentData: ISpent = req.body
   const { user } = spentData
 
   const userData = await User.findOne({ userName: user })
 
   const spent = new Spent({
-    ...result.data,
+    ...spentData,
     user: userData?._id,
-    state: true,
+    // state: true,
   })
 
   await spent.save()
