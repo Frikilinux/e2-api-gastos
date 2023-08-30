@@ -6,7 +6,7 @@ interface ISpent {
   price: number
   product: string
   description: string
-  state: boolean
+  state?: boolean
 }
 
 const SpentSchema = new Schema<ISpent>({
@@ -29,6 +29,7 @@ const SpentSchema = new Schema<ISpent>({
   },
   state: {
     type: Boolean,
+    default: true
   },
 })
 
