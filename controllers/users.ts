@@ -20,15 +20,9 @@ const getUserByUserName = async (req: Request, res: Response) => {
 }
 
 const createUser = async (req: Request, res: Response) => {
-  const result = validateUser(req.body)
+  const { dni, mail, userName, name, state }: IUser = req.body
 
-  if (!result.success) {
-    return res
-      .status(400)
-      .json({ error: { ...result.error, name: 'ZOTTA Error' } })
-  }
-
-  const user = new User<IUser>({ ...result.data, state: true })
+  const user = new User<IUser>(req.body)
 
   await user.save()
 

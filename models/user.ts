@@ -1,11 +1,11 @@
-import { Schema, model } from 'mongoose'
+import { Model, Schema, model } from 'mongoose'
 
 interface IUser {
   userName: string
   dni: number
   name: string
   mail: string
-  state: boolean
+  state?: boolean
 }
 
 const UserSchema = new Schema<IUser>({
@@ -15,7 +15,6 @@ const UserSchema = new Schema<IUser>({
   },
   dni: {
     type: Number,
-    unique: true,
   },
   name: {
     type: String,
@@ -23,11 +22,17 @@ const UserSchema = new Schema<IUser>({
   mail: {
     type: String,
   },
-  state:{
-    type: Boolean
-  }
+  state: {
+    type: Boolean,
+    default: true,
+  },
 })
 
-const User = model<IUser>('User', UserSchema)
+UserSchema.methods.toJson = function () {
+  const { __v, state, ...user } = this.toObject()
+  return user
+}
 
-export {IUser, User}
+const User: Model<IUser> = model<IUser>('User', UserSchema)
+
+export { IUser, User }

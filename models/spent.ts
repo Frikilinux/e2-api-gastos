@@ -32,6 +32,11 @@ const SpentSchema = new Schema<ISpent>({
   },
 })
 
+SpentSchema.methods.toJson = function () {
+  const { __v, state, ...spent } = this.toObject()
+  return spent
+}
+
 const Spent = model<ISpent>('Spent', SpentSchema)
 
 export { ISpent, Spent }
